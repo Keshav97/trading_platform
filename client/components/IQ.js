@@ -26,10 +26,26 @@ export default class IQ extends React.Component {
     }
 
     this.props.socket.on("onOrderMessage", (orderMsg) => {
-      console.log("Order Message");
-
       let orders = clone(this.state.orders);
-      orders[orderMsg.clientOrderId] = orderMsg
+      // if (orderMsg.clientOrderId in this.state.orders) {
+      if (orderMsg.type === "ExecutionReport") {
+        let oldQty = parseInt(orders[orderMsg.clientOrderId].qty);
+
+        orders[orderMsg.clientOrderId] = {
+          price: orderMsg.price,
+          qty: parseInt(orderMsg.qty) + oldQty,
+          executionReportId: orderMsg.executionReportId,
+          clientOrderId: orderMsg.clientOrderId
+        }
+      }
+      else {
+        orders[orderMsg.clientOrderId] = {
+          price: orderMsg.price,
+          qty: 0,
+          executionReportId: orderMsg.executionReportId,
+          clientOrderId: orderMsg.clientOrderId
+        }
+      }
 
       this.setState({
         orders

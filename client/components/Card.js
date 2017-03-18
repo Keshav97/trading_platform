@@ -14,10 +14,12 @@ export default class Card extends React.Component {
     this.state = {
       marketData: {},
       lastPrice: 0.00,
-      color: "blue-grey"
+      color: "blue-grey",
+      quantity: 1
     };
 
     this.createOrder = this.createOrder.bind(this);
+    this.updateInputValue = this.updateInputValue.bind(this);
   }
 
   componentDidMount() {
@@ -63,9 +65,14 @@ export default class Card extends React.Component {
       clientOrderId: (this.props.stockName + "|" + makeid()),
       symbol: this.props.stockName,
       buySell: "BUY",
-      qty: 1
+      qty: this.state.quantity
     })
-    console.log("Ordered");
+  }
+
+  updateInputValue(evt) {
+    this.setState({
+      quantity: evt.target.value
+    });
   }
 
   render() {
@@ -78,6 +85,8 @@ export default class Card extends React.Component {
             <p>Type: { this.state.marketData.type }</p>
             <p>Bid: { this.state.marketData.bid }</p>
             <p>Ask: { this.state.marketData.ask }</p>
+            <input placeholder="Quantity" type="text" className="validate"
+               onChange={this.updateInputValue} value={this.state.quantity} />
           </div>
           <div className="card-action">
             <a onClick={this.createOrder}>Buy</a>
