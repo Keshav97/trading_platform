@@ -1,5 +1,7 @@
-.card {
-  padding: 20px;
+.stockCard {
+  display: inline-block;
+  width: 300px;
+  margin-right: 10px;
 }
 
 button {

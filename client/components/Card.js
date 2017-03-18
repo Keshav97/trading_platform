@@ -70,7 +70,7 @@ export default class Card extends React.Component {
 
   render() {
     return (
-        <div className={"card " + this.state.color +  " darken-1"}>
+        <div className={"card stockCard " + this.state.color +  " darken-1"}>
           <div className="card-content white-text">
             <span className="card-title">{this.props.stockName}</span>
             <h1>{ this.state.lastPrice }</h1>
@@ -78,8 +78,10 @@ export default class Card extends React.Component {
             <p>Type: { this.state.marketData.type }</p>
             <p>Bid: { this.state.marketData.bid }</p>
             <p>Ask: { this.state.marketData.ask }</p>
-
-            <button className="btn" onClick={this.createOrder}>Buy</button>
+          </div>
+          <div className="card-action">
+            <a onClick={this.createOrder}>Buy</a>
+            <a onClick={this.createOrder}>Sell</a>
           </div>
         </div>
     );
