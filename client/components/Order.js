@@ -23,6 +23,7 @@ export default class Order extends React.Component {
     return (
         <tr>
           <td>{ orderName }</td>
+          <td>{ this.props.orderData.buySell }</td>
           <td>{ this.props.orderData.price }</td>
           <td>{ this.props.orderData.qty }</td>
           <td>{ this.props.orderData.executionReportId }</td>

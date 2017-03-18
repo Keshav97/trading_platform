@@ -35,7 +35,8 @@ export default class IQ extends React.Component {
           price: orderMsg.price,
           qty: parseInt(orderMsg.qty) + oldQty,
           executionReportId: orderMsg.executionReportId,
-          clientOrderId: orderMsg.clientOrderId
+          clientOrderId: orderMsg.clientOrderId,
+          buySell: orders[orderMsg.clientOrderId].buySell
         }
       }
       else {
@@ -43,7 +44,8 @@ export default class IQ extends React.Component {
           price: orderMsg.price,
           qty: 0,
           executionReportId: orderMsg.executionReportId,
-          clientOrderId: orderMsg.clientOrderId
+          clientOrderId: orderMsg.clientOrderId,
+          buySell: orderMsg.buySell
         }
       }
 
@@ -71,6 +73,7 @@ export default class IQ extends React.Component {
             <table>
               <thead>
                 <th>Stock</th>
+                <th>Type</th>
                 <th>Price</th>
                 <th>Quantity</th>
                 <th>Execution Report Id</th>

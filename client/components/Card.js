@@ -47,7 +47,7 @@ export default class Card extends React.Component {
     })
   }
 
-  createOrder(e) {
+  createOrder(e, type) {
     e.preventDefault();
 
     function makeid() {
@@ -64,7 +64,7 @@ export default class Card extends React.Component {
       type: "NewOrder",
       clientOrderId: (this.props.stockName + "|" + makeid()),
       symbol: this.props.stockName,
-      buySell: "BUY",
+      buySell: type,
       qty: this.state.quantity
     })
   }
@@ -89,8 +89,8 @@ export default class Card extends React.Component {
                onChange={this.updateInputValue} value={this.state.quantity} />
           </div>
           <div className="card-action">
-            <a onClick={this.createOrder}>Buy</a>
-            <a onClick={this.createOrder}>Sell</a>
+            <a onClick={(evt) => this.createOrder(evt, "BUY")}>Buy</a>
+            <a onClick={(evt) => this.createOrder(evt, "SELL")}>Sell</a>
           </div>
         </div>
     );
