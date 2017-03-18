@@ -1,10 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
 import 'whatwg-fetch';
-import io from 'socket.io-client';
-
-
-let socket = io(`http://emsapi.eu-west-2.elasticbeanstalk.com/`);
 
 
 /*
@@ -20,6 +16,8 @@ export default class Card extends React.Component {
       lastPrice: 0.00,
       color: "blue-grey"
     };
+
+    this.createOrder = this.createOrder.bind(this);
   }
 
   componentDidMount() {
@@ -47,6 +45,29 @@ export default class Card extends React.Component {
     })
   }
 
+  createOrder(e) {
+    e.preventDefault();
+
+    function makeid() {
+        var text = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        for(let i=0; i < 5; i++)
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+        return text;
+    }
+
+    this.props.socket.emit("submitOrder", {
+      type: "NewOrder",
+      clientOrderId: (this.props.stockName + "|" + makeid()),
+      symbol: this.props.stockName,
+      buySell: "BUY",
+      qty: 1
+    })
+    console.log("Ordered");
+  }
+
   render() {
     return (
         <div className={"card " + this.state.color +  " darken-1"}>
@@ -58,8 +79,7 @@ export default class Card extends React.Component {
             <p>Bid: { this.state.marketData.bid }</p>
             <p>Ask: { this.state.marketData.ask }</p>
 
-            <button className="waves-effect waves-light btn">Buy</button>
-            <button className="waves-effect waves-light btn">Sell</button>
+            <button className="btn" onClick={this.createOrder}>Buy</button>
           </div>
         </div>
     );

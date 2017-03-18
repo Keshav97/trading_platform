@@ -5,6 +5,7 @@ import io from 'socket.io-client';
 
 
 import Card from './Card';
+import IQ from './IQ';
 
 
 let socket = io(`http://emsapi.eu-west-2.elasticbeanstalk.com/`);
@@ -49,6 +50,7 @@ export default class Platform extends React.Component {
           </div>
         </nav>
         <div className="container">
+          <IQ socket={ this.state.socket } />
           {stockCards}
         </div>
       </div>
