@@ -1,7 +1,22 @@
-.stockCard {
+/*.stockCard {
   display: inline-block;
   width: 300px;
   margin-right: 10px;
+}*/
+
+.card .card-content {
+  padding-bottom: 0px;
+}
+
+.row {
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+#AAPL, #AMD, #BAC, #BMY, #C, #CSCO, #CYH, #FB, #FCX, #GE, #INTC, #MDLZ, #MSFT,
+#WMT, #MU, #INTC, #PFE, #VZ, #WFX, #WMT, #XOM {
+  height: 300px;
+  width: 400px;
 }
 
 button {

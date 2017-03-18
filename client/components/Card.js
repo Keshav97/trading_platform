@@ -7,6 +7,9 @@ import 'whatwg-fetch';
 This component shows the list of Classes
 */
 
+import Graph from './Graph';
+
+
 export default class Card extends React.Component {
 
   constructor(props) {
@@ -15,7 +18,8 @@ export default class Card extends React.Component {
       marketData: {},
       lastPrice: 0.00,
       color: "blue-grey",
-      quantity: 1
+      quantity: 1,
+      values: []
     };
 
     this.createOrder = this.createOrder.bind(this);
@@ -26,6 +30,26 @@ export default class Card extends React.Component {
     this.props.socket.on("onMarketData", (marketData) => {
       if (marketData.symbol === this.props.stockName) {
         if (marketData.type === "TRADE") {
+          let values = this.state.values;
+
+          if (values.length < 20) {
+            values.push([(values.length+1)*10, parseFloat(marketData.lastPrice)])
+            if (marketData.symbol === "AAPL") {
+              console.log(values);
+            }
+            this.setState({
+              values
+            })
+          }
+          else {
+            values.slice(0, 1);
+            values.push([(values.length+1)*10, parseFloat(marketData.lastPrice)]);
+            console.log(values);
+            this.setState({
+              values
+            })
+          }
+
           if (marketData.lastPrice > this.state.lastPrice) {
             this.setState({
               color: "green"
@@ -79,14 +103,20 @@ export default class Card extends React.Component {
     return (
         <div className={"card stockCard " + this.state.color +  " darken-1"}>
           <div className="card-content white-text">
-            <span className="card-title">{this.props.stockName}</span>
-            <h1>{ this.state.lastPrice }</h1>
-            <p>Time: { this.state.marketData.time }</p>
-            <p>Type: { this.state.marketData.type }</p>
-            <p>Bid: { this.state.marketData.bid }</p>
-            <p>Ask: { this.state.marketData.ask }</p>
-            <input placeholder="Quantity" type="text" className="validate"
-               onChange={this.updateInputValue} value={this.state.quantity} />
+            <div className="row">
+              <div className="col s6">
+                <span className="card-title">{this.props.stockName}</span>
+                <h1>{ this.state.lastPrice }</h1>
+                <p>Type: { this.state.marketData.type }</p>
+                <p>Bid: { this.state.marketData.bid }</p>
+                <p>Ask: { this.state.marketData.ask }</p>
+                <input placeholder="Quantity" type="text" className="validate"
+                   onChange={this.updateInputValue} value={this.state.quantity} />
+              </div>
+              <div className="col s6">
+                <Graph stockName={this.props.stockName} values={this.state.values}/>
+              </div>
+            </div>
           </div>
           <div className="card-action">
             <a onClick={(evt) => this.createOrder(evt, "BUY")}>Buy</a>
