@@ -21,14 +21,12 @@ export default class Order extends React.Component {
     let orderName = this.props.orderData.clientOrderId.split("|")[0];
 
     return (
-        <div className="card blue-grey white-text">
-          <div className="card-content">
-            <span className="card-title">{ orderName }</span>
-            <p>{ this.props.orderData.price }</p>
-            <p>{ this.props.orderData.qty }</p>
-            <p>{ this.props.orderData.executionReportId }</p>
-          </div>
-        </div>
+        <tr>
+          <td>{ orderName }</td>
+          <td>{ this.props.orderData.price }</td>
+          <td>{ this.props.orderData.qty }</td>
+          <td>{ this.props.orderData.executionReportId }</td>
+        </tr>
     );
   }
 

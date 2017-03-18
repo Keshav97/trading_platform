@@ -52,7 +52,19 @@ export default class IQ extends React.Component {
         <div className="card blue-grey white-text">
           <div className="card-content">
             <span className="card-title">Orders</span>
-            <p>{ orders }</p>
+            <table>
+              <thead>
+                <th>Stock</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Execution Report Id</th>
+              </thead>
+
+              <tbody>
+                { orders }
+              </tbody>
+
+            </table>
           </div>
         </div>
     );
