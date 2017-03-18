@@ -29,14 +29,23 @@ export default class IQ extends React.Component {
       let orders = clone(this.state.orders);
       // if (orderMsg.clientOrderId in this.state.orders) {
       if (orderMsg.type === "ExecutionReport") {
+        let old = orders[orderMsg.clientOrderId];
         let oldQty = parseInt(orders[orderMsg.clientOrderId].qty);
+
+        console.log(parseFloat(orderMsg.price));
+        console.log(oldQty + parseInt(orderMsg.qty));
+        console.log(old.totalPrice);
+        let pl = parseFloat(orderMsg.price) * (oldQty + parseInt(orderMsg.qty)) - old.totalPrice;
+        console.log("P&L", pl);
 
         orders[orderMsg.clientOrderId] = {
           price: orderMsg.price,
           qty: parseInt(orderMsg.qty) + oldQty,
           executionReportId: orderMsg.executionReportId,
           clientOrderId: orderMsg.clientOrderId,
-          buySell: orders[orderMsg.clientOrderId].buySell
+          buySell: orders[orderMsg.clientOrderId].buySell,
+          pl: Math.round(pl * 100) / 100,
+          totalPrice: (old.totalPrice + parseInt(orderMsg.qty) * parseFloat(orderMsg.price))
         }
       }
       else {
@@ -45,7 +54,9 @@ export default class IQ extends React.Component {
           qty: 0,
           executionReportId: orderMsg.executionReportId,
           clientOrderId: orderMsg.clientOrderId,
-          buySell: orderMsg.buySell
+          buySell: orderMsg.buySell,
+          totalPrice: 0,
+          pl: 0
         }
       }
 
@@ -76,6 +87,7 @@ export default class IQ extends React.Component {
                 <th>Type</th>
                 <th>Price</th>
                 <th>Quantity</th>
+                <th>P&L</th>
                 <th>Execution Report Id</th>
               </thead>
 

@@ -32,11 +32,8 @@ export default class Card extends React.Component {
         if (marketData.type === "TRADE") {
           let values = this.state.values;
 
-          if (values.length < 20) {
+          if (values.length < 10) {
             values.push([(values.length+1)*10, parseFloat(marketData.lastPrice)])
-            if (marketData.symbol === "AAPL") {
-              console.log(values);
-            }
             this.setState({
               values
             })
@@ -44,7 +41,6 @@ export default class Card extends React.Component {
           else {
             values.slice(0, 1);
             values.push([(values.length+1)*10, parseFloat(marketData.lastPrice)]);
-            console.log(values);
             this.setState({
               values
             })

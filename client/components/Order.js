@@ -26,6 +26,7 @@ export default class Order extends React.Component {
           <td>{ this.props.orderData.buySell }</td>
           <td>{ this.props.orderData.price }</td>
           <td>{ this.props.orderData.qty }</td>
+          <td>{ this.props.orderData.pl }</td>
           <td>{ this.props.orderData.executionReportId }</td>
         </tr>
     );
