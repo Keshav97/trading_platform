@@ -21,7 +21,7 @@ export default class Platform extends React.Component {
     super(props);
     this.state = {
       stocks: ["AAPL", "AMD", "BAC", "BMY", "C", "CSCO", "CYH", "FB", "FCX",
-       "GE", "INTC", "MDLZ", "MSFT", "WMT", "MU", "INTC", "PFE", "VZ", "WFX", "WMT", "XOM"],
+       "GE", "INTC", "MDLZ", "MSFT", "WMT", "MU", "INTC", "PFE", "VZ", "WMT", "XOM"],
       socket
     };
   }
@@ -46,7 +46,7 @@ export default class Platform extends React.Component {
       <div>
         <nav>
           <div className="nav-wrapper container">
-            <a href="#" className="brand-logo">Trader</a>
+            <a href="#" className="brand-logo center">Trading Epiphany</a>
           </div>
         </nav>
         <div className="container">

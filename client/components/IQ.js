@@ -32,10 +32,9 @@ export default class IQ extends React.Component {
         let old = orders[orderMsg.clientOrderId];
         let oldQty = parseInt(orders[orderMsg.clientOrderId].qty);
 
-        console.log(parseFloat(orderMsg.price));
-        console.log(oldQty + parseInt(orderMsg.qty));
-        console.log(old.totalPrice);
-        let pl = parseFloat(orderMsg.price) * (oldQty + parseInt(orderMsg.qty)) - old.totalPrice;
+        console.log("Old total Price", old.totalPrice);
+        let totalPrice = (old.totalPrice + parseInt(orderMsg.qty) * parseFloat(orderMsg.price));
+        let pl = parseFloat(orderMsg.price) * (oldQty + parseInt(orderMsg.qty)) - totalPrice;
         console.log("P&L", pl);
 
         orders[orderMsg.clientOrderId] = {
@@ -44,8 +43,8 @@ export default class IQ extends React.Component {
           executionReportId: orderMsg.executionReportId,
           clientOrderId: orderMsg.clientOrderId,
           buySell: orders[orderMsg.clientOrderId].buySell,
-          pl: Math.round(pl * 100) / 100,
-          totalPrice: (old.totalPrice + parseInt(orderMsg.qty) * parseFloat(orderMsg.price))
+          pl: Math.round(pl * 10000) / 10000,
+          totalPrice,
         }
       }
       else {
